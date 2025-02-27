@@ -21,22 +21,19 @@ jobs:
       - name: Set up DEEPSOURCE_DSN
         run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
-      # Install dependencies (ไม่มีการใช้ path เพราะ package.json อยู่ใน root directory)
-      - name: Install dependencies
-        run: npm install
-
       # Install the DeepSource CLI
       - name: Install DeepSource CLI
         run: curl https://deepsource.io/cli | sh
 
-      # Run tests and generate coverage report using Jest
-      - name: Run tests and generate coverage report
+      # Build the Docker image and run the tests inside the container
+      - name: Build and test with Docker
         run: |
-          npm test --coverage --coverageReporters=cobertura
+          docker build -t my-app .
+          docker run --rm my-app pytest --cov=./ --cov-report xml:coverage.xml
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
         run: |
-          ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/cobertura-coverage.xml
+          ./bin/deepsource report --analyzer test-coverage --key docker --value-file coverage.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
