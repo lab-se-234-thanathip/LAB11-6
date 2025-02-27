@@ -1,3 +1,7 @@
-module github.com/chefthanathip/LAB11-6
+module github.com/lab-se-234-thanathip/LAB11-6
 
-go 1.24.0
+go 1.18
+
+require (
+    github.com/some/dependency v1.2.3
+)
