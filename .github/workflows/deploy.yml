@@ -37,24 +37,19 @@ jobs:
           push: true
           tags: thechef2546/234-deploylab-devop6:latest
 
-      # Step 6: Set up DeepSource CLI
-      - name: Set up DeepSource CLI
+      # Step 6: Install DeepSource CLI
+      - name: Install DeepSource CLI
         run: |
           curl https://deepsource.io/cli | sh
+          echo "DeepSource CLI installed at: $(which deepsource)"
           export PATH=$PATH:$HOME/deepsource/bin
 
-      # Step 7: Run DeepSource scan
+      # Step 7: Run DeepSource Scan
       - name: Run DeepSource Scan
         run: |
           deepsource analyze --token ${{ secrets.DEEPSOURCE_TOKEN }}
 
-      # Step 8: Upload SARIF report to GitHub
-      - name: Upload SARIF report to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ./deepsource.sarif
-
-      # Step 9: Copy docker-compose.yml to server via SSH
+      # Step 8: Copy docker-compose.yml to server via SSH
       - name: Copy docker-compose.yml to server via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -64,7 +59,7 @@ jobs:
           source: "docker-compose.yml"
           target: "/home/ubuntu/frontend"
 
-      # Step 10: Deploy Docker Compose
+      # Step 9: Deploy Docker Compose
       - name: Deploy Docker Compose
         uses: appleboy/ssh-action@v1.2.1
         with:
