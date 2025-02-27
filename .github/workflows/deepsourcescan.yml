@@ -21,15 +21,24 @@ jobs:
       - name: Set up DEEPSOURCE_DSN
         run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
-      # Install the DeepSource CLI
-      - name: Install DeepSource CLI
-        run: curl https://deepsource.io/cli | sh
-
-      # Build the Docker image and run the tests inside the container
-      - name: Build and test with Docker
+      # Build the Docker image
+      - name: Build Docker image
         run: |
-          docker build -t my-app .
-          docker run --rm my-app pytest --cov=./ --cov-report xml:coverage.xml
+          docker build -t my-docker-image .
+
+      # Run the container (you can adjust the command for your application)
+      - name: Run Docker container
+        run: |
+          docker run --rm -d my-docker-image
+
+      # Wait for a few seconds for the server to start
+      - name: Wait for server to start
+        run: sleep 10
+
+      # Generate the coverage report by calling your app's health check or test endpoint
+      - name: Generate coverage report
+        run: |
+          curl http://localhost:80/coverage-report > coverage.xml
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
