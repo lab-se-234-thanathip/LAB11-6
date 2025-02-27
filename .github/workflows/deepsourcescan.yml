@@ -21,10 +21,9 @@ jobs:
       - name: Set up DEEPSOURCE_DSN
         run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
-      # Install dependencies (adjust based on your project setup)
+      # Install dependencies (ไม่มีการใช้ path เพราะ package.json อยู่ใน root directory)
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
 
       # Install the DeepSource CLI
       - name: Install DeepSource CLI
