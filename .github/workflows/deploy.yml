@@ -38,10 +38,10 @@ jobs:
           tags: thechef2546/234-deploylab-devop6:latest
 
       # Step 6: Run DeepSource Docker Analyze
-      - name: Run DeepSource Docker Analyze
+      - name: Install DeepSource CLI and run analysis
         run: |
           curl -sL https://deepsource.io/cli/install | bash
-          ./bin/deepsource analyze --token ${{ secrets.DEEPSOURCE_DSN }}
+          ./bin/deepsource analyze --token ${{ secrets.DEEPSOURCE_DSN }} --platform docker
 
       # Step 7: Copy docker-compose.yml to server via SSH
       - name: Copy docker-compose.yml to server via SSH
