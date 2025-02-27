@@ -68,3 +68,5 @@ jobs:
             docker-compose pull
             docker-compose up -d
             rm -rf /home/ubuntu/frontend
+git add . git commit -m “TEST” 
+ git push origin main
