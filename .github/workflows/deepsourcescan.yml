@@ -29,16 +29,16 @@ jobs:
       # Run the container (you can adjust the command for your application)
       - name: Run Docker container
         run: |
-          docker run --rm -d my-docker-image
+          docker run -p 8000:80 my-docker-image
 
       # Wait for a few seconds for the server to start
       - name: Wait for server to start
-        run: sleep 10
+        run: sleep 5
 
       # Generate the coverage report by calling your app's health check or test endpoint
       - name: Generate coverage report
         run: |
-          curl http://localhost:80/coverage-report > coverage.xml
+          curl http://localhost:8000 > coverage.xml
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
