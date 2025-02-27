@@ -42,3 +42,8 @@ jobs:
             echo "Error: coverage/lcov.info not found!"
             exit 1
           fi
+
+      - name: List Issues Found
+        env:
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+        run: ./bin/deepsource issues list
