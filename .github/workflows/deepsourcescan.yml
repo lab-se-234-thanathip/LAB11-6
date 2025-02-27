@@ -33,7 +33,7 @@ jobs:
 
       # Wait for a few seconds to ensure the container is running
       - name: Wait for server to start
-        run: sleep 20  # เพิ่มเวลารอให้ container ทำงาน
+        run: sleep 5 # เพิ่มเวลารอให้ container ทำงาน
 
       # Check if the container is running
       - name: Verify Docker container is running
@@ -45,9 +45,14 @@ jobs:
         run: |
           curl http://localhost:8000/coverage-report > coverage.xml
 
+      # Install DeepSource CLI
+      - name: Install DeepSource CLI
+        run: |
+          curl -sSL https://deepsource.io/cli | sh
+
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
         run: |
-          ./bin/deepsource report --analyzer test-coverage --key docker --value-file coverage.xml
+          ./deepsource report --analyzer test-coverage --key docker --value-file coverage.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
