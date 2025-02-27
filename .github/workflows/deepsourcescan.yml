@@ -53,6 +53,6 @@ jobs:
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
         run: |
-          ./deepsource report --analyzer test-coverage --key docker --value-file coverage.xml
+          ./bin/deepsource report --analyzer test-coverage --key docker --value-file coverage.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
