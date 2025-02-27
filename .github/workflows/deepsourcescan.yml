@@ -1,4 +1,4 @@
-name: Test Coverage with DeepSource
+name: Go Test Coverage with DeepSource
 
 on:
   push:
@@ -16,14 +16,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Go (or any other language you're using)
+      - name: Set up Go
         uses: actions/setup-go@v3
         with:
           go-version: '1.18'
 
+      - name: Initialize Go module
+        run: go mod init
+
       - name: Run tests and generate coverage
-        run: |
-          go test -coverprofile=coverage.out
+        run: go test -coverprofile=coverage.out
 
       - name: Install DeepSource CLI
         run: curl https://deepsource.io/cli | sh
