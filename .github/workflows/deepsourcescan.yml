@@ -21,19 +21,23 @@ jobs:
       - name: Set up DEEPSOURCE_DSN
         run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
+      # Install dependencies (adjust based on your project setup)
+      - name: Install dependencies
+        run: |
+          npm install
+
       # Install the DeepSource CLI
       - name: Install DeepSource CLI
         run: curl https://deepsource.io/cli | sh
 
-      # Run the tests and generate the coverage report (adjust the test command based on your language and framework)
+      # Run tests and generate coverage report using Jest
       - name: Run tests and generate coverage report
         run: |
-          # Example for Python
-          pytest --cov=./ --cov-report xml:coverage.xml
+          npm test --coverage --coverageReporters=cobertura
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
         run: |
-          ./bin/deepsource report --analyzer test-coverage --key python --value-file coverage.xml
+          ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/cobertura-coverage.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
