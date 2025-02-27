@@ -8,21 +8,5 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install DeepSource CLI
-        run: |
-          curl -fsSL https://deepsource.io/cli | sh
-          export PATH=$HOME/.deepsource/bin:$PATH
-          echo "PATH=$HOME/.deepsource/bin:$PATH" >> $GITHUB_ENV
-
-      - name: Verify Installation
-        run: deepsource --version
-
-      - name: Run DeepSource Scan
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-        run: |
-          deepsource report --analyzer docker --key $DEEPSOURCE_DSN
+    
+    
