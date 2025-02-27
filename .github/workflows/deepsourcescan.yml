@@ -23,8 +23,13 @@ jobs:
       - name: Verify Installation
         run: ./bin/deepsource version
 
-      - name: Report Dockerfile to DeepSource
-        run: |
-          ./bin/deepsource report --analyzer docker --value-file Dockerfile
+      - name: Report Test Coverage to DeepSource
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+        run: |
+          ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/lcov.info
+
+      - name: List Issues Found
+        env:
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+        run: ./bin/deepsource issues list
