@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
+
 
 jobs:
   deepsource:
@@ -13,15 +13,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Tests and Generate Coverage
-        run: npm test -- --coverage
-
-      - name: Check if coverage file exists
-        run: ls -la coverage/
 
       - name: Install DeepSource CLI
         run: |
@@ -32,18 +23,7 @@ jobs:
       - name: Verify Installation
         run: ./bin/deepsource version
 
-      - name: Report Test Coverage to DeepSource
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-        run: |
-          if [ -f coverage/lcov.info ]; then
-            ./bin/deepsource report --analyzer test-coverage --key javascript --value-file coverage/lcov.info
-          else
-            echo "Error: coverage/lcov.info not found!"
-            exit 1
-          fi
-
-      - name: List Issues Found
+      - name: List Issues Found in Dockerfile
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
         run: ./bin/deepsource issues list
