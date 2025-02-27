@@ -12,7 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: DeepSource Analyze
+      - name: Install DeepSource CLI
         run: |
           curl https://deepsource.io/cli | sh
-          ./bin/deepsource analyze --key ${{ secrets.DEEPSOURCE_DSN }}
+          mv ./bin/deepsource /usr/local/bin/deepsource
+
+      - name: Run DeepSource Scan
+        run: |
+          deepsource report --analyzer docker --key ${{ secrets.DEEPSOURCE_DSN }}
