@@ -1,4 +1,4 @@
-name: DeepSource Report and Docker Lint
+name: DeepSource Scan
 
 on:
   push:
@@ -9,23 +9,22 @@ on:
 jobs:
   deepsource:
     runs-on: ubuntu-latest
-    env:
-        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Install DeepSource CLI
-      run: |
-        curl https://deepsource.io/cli | sh
-        chmod +x ./bin/deepsource
-        echo "$HOME/bin" >> $GITHUB_PATH
+      - name: Set DeepSource DSN
+        run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
-    - name: Verify Installation
-      run: ./bin/deepsource version
+      - name: Install DeepSource CLI
+        run: |
+          curl https://deepsource.io/cli | sh
+          chmod +x ./bin/deepsource
+          echo "$HOME/bin" >> $GITHUB_PATH
 
-    - name: Report Artifacts to DeepSource
-      env:
-        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-      run: ./bin/deepsource report --analyzer docker --value-file Dockerfile
-    #   fd
+      - name: Verify Installation
+        run: ./bin/deepsource version
+
+      - name: Report Dockerfile to DeepSource
+        run: ./bin/deepsource report --analyzer docker --value-file Dockerfile
