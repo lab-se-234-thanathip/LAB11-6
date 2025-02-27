@@ -16,11 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up DeepSource
-        uses: deepsourcelabs/deepsource-action@v2
-        with:
-          token: ${{ secrets.DEEPSOURCE_TOKEN }}
+      - name: Install DeepSource CLI
+        run: |
+          curl -sSL https://github.com/deepsourcelabs/deepsource-cli/releases/download/v0.8.4/deepsource-linux-amd64-v0.8.4.tar.gz | tar xz -C /usr/local/bin
 
       - name: Run DeepSource scan
-        run: |
-          deepsource scan
+        run: deepsource scan
+        env:
+          DEEPSOURCE_TOKEN: ${{ secrets.DEEPSOURCE_TOKEN }}
