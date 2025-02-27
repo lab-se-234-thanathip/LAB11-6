@@ -17,5 +17,7 @@ jobs:
           curl https://deepsource.io/cli | sh
 
       - name: Run DeepSource Scan
+        env:
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
         run: |
-          deepsource report --analyzer docker --key ${{ secrets.DEEPSOURCE_DSN }}
+          deepsource report --analyzer docker --key $DEEPSOURCE_DSN
