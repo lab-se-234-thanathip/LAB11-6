@@ -26,5 +26,8 @@ jobs:
       - name: Set up DeepSource Auth Token
         run: echo "DEEPSOURCE_AUTH_TOKEN=${{ secrets.DEEPSOURCE_AUTH_TOKEN }}" >> $GITHUB_ENV
 
+      - name: Set up DeepSource DSN
+        run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
+
       - name: Run DeepSource Report
         run: ./bin/deepsource report
