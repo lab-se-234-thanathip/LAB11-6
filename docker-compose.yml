@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  web:
+    image: thechef2546/test:2.0
+    ports:
+      - "8000:80"
