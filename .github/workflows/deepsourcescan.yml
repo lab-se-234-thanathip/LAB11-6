@@ -29,7 +29,7 @@ jobs:
       # Run the container in detached mode
       - name: Run Docker container
         run: |
-          docker run --rm -d my-docker-image
+          docker run --rm -d -p 8000:80 my-docker-image
 
       # Wait for a few seconds to ensure the container is running
       - name: Wait for server to start
@@ -43,7 +43,7 @@ jobs:
       # Generate the coverage report (ปรับตามวิธีทดสอบที่คุณใช้)
       - name: Run custom tests and generate coverage report
         run: |
-          curl http://localhost:80/coverage-report > coverage.xml
+          curl http://localhost:8000/coverage-report > coverage.xml
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
