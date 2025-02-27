@@ -19,4 +19,4 @@ jobs:
 
       - name: Run DeepSource Scan
         run: |
-          deepsource report --analyzer docker --key ${{ secrets.DEEPSOURCE_DSN }}
+          deepsource report --analyzer docker --key https://5587ef9517874bbcb55fee01f0750dc0@app.deepsource.com
