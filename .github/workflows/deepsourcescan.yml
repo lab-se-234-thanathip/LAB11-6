@@ -1,10 +1,6 @@
-name: Analyze Dockerfile
+name: DeepSource Analysis
 
-on:
-  push:
-    branches:
-      - main # ทำงานเมื่อมีการ push ไปที่สาขา main
-    
+on: [push, pull_request]
 
 jobs:
   analyze:
@@ -18,7 +14,7 @@ jobs:
       - name: Install DeepSource CLI
         run: curl https://deepsource.io/cli | sh
 
-      - name: Analyze Dockerfile
-        run: ./bin/deepsource analyze --analyzer docker
+      - name: Run DeepSource Analysis
+        run: ./bin/deepsource report
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
