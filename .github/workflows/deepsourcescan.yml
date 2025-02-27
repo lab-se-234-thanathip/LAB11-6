@@ -18,11 +18,13 @@ jobs:
     - name: Install DeepSource CLI
       run: |
         curl https://deepsource.io/cli | sh
-        
+        chmod +x ./bin/deepsource
+        echo "$HOME/bin" >> $GITHUB_PATH
 
     - name: Verify Installation
       run: ./bin/deepsource version
 
-    # 🔹 ใช้คำสั่ง `deepsource report` แทน
     - name: Report Artifacts to DeepSource
+      env:
+        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
       run: ./bin/deepsource report --analyzer docker --value-file Dockerfile
