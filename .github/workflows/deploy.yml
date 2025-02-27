@@ -37,11 +37,6 @@ jobs:
           push: true
           tags: thechef2546/234-deploylab-devop6:latest
 
-      # Step 6: Run DeepSource Docker Analyze
-      - name: Run DeepSource Docker Analyze
-        run: |
-          curl -sL https://deepsource.io/cli/install | bash
-          ./bin/deepsource analyze --token ${{ secrets.DEEPSOURCE_DSN }}
 
       # Step 7: Copy docker-compose.yml to server via SSH
       - name: Copy docker-compose.yml to server via SSH
@@ -68,5 +63,3 @@ jobs:
             docker-compose pull
             docker-compose up -d
             rm -rf /home/ubuntu/frontend
-git add . git commit -m “TEST” 
- git push origin main
