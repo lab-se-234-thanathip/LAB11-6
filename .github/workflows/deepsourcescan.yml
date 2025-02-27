@@ -29,16 +29,20 @@ jobs:
       # Run the container (you can adjust the command for your application)
       - name: Run Docker container
         run: |
-          docker run -p 8000:80 my-docker-image
+          docker run --rm -d my-docker-image
 
       # Wait for a few seconds for the server to start
       - name: Wait for server to start
-        run: sleep 5
+        run: sleep 10
 
-      # Generate the coverage report by calling your app's health check or test endpoint
-      - name: Generate coverage report
+      # Generate the coverage report (ปรับตามวิธีทดสอบที่คุณใช้)
+      - name: Run custom tests and generate coverage report
         run: |
-          curl http://localhost:8000 > coverage.xml
+          # ถ้าคุณใช้เครื่องมือหรือคำสั่งทดสอบที่ไม่ได้เกี่ยวข้องกับ pytest
+          # คุณสามารถใช้คำสั่งที่ตรงกับเครื่องมือที่ใช้ เช่น
+          # ./run_tests.sh --coverage > coverage.xml
+          # หรือถ้าเป็น endpoint ที่รันการทดสอบ
+          curl http://localhost:80/coverage-report > coverage.xml
 
       # Report the coverage artifact to DeepSource
       - name: Report coverage to DeepSource
