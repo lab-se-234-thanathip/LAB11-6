@@ -1,4 +1,4 @@
-name: Test Coverage with DeepSource
+name: DeepSource Test Coverage Analysis
 
 on:
   push:
@@ -9,29 +9,31 @@ on:
       - main
 
 jobs:
-  analyze:
+  test-coverage:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Go (or any other language you're using)
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.18'
+      # Set up the environment variables
+      - name: Set up DEEPSOURCE_DSN
+        run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
 
-      - name: Run tests and generate coverage
-        run: |
-          # หากไฟล์ Go อยู่ในโฟลเดอร์ย่อย
-          cd path/to/go/files
-          go test -coverprofile=coverage.out
-
+      # Install the DeepSource CLI
       - name: Install DeepSource CLI
         run: curl https://deepsource.io/cli | sh
 
-      - name: Upload test coverage to DeepSource
+      # Run the tests and generate the coverage report (adjust the test command based on your language and framework)
+      - name: Run tests and generate coverage report
         run: |
-          ./bin/deepsource report --analyzer test-coverage --key go --value-file coverage.out
+          # Example for Python
+          pytest --cov=./ --cov-report xml:coverage.xml
+
+      # Report the coverage artifact to DeepSource
+      - name: Report coverage to DeepSource
+        run: |
+          ./bin/deepsource report --analyzer test-coverage --key python --value-file coverage.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
