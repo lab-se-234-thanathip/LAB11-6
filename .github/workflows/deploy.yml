@@ -37,11 +37,7 @@ jobs:
           push: true
           tags: thechef2546/234-deploylab-devop6:latest
 
-      # Step 6: Run DeepSource scan
-      - name: Run DeepSource Scan
-        uses: deepsource/action@v1.0.0  # Update to the correct version
-        with:
-          token: ${{ secrets.DEEPSOURCE_TOKEN }}
+    
 
       # Step 7: Copy docker-compose.yml to server via SSH
       - name: Copy docker-compose.yml to server via SSH
