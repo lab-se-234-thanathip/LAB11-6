@@ -14,7 +14,7 @@ jobs:
 
       - name: Install DeepSource CLI
         run: |
-          curl https://deepsource.io/cli | sh
+          curl -sL https://deepsource.io/cli | sh
           mv ./bin/deepsource /usr/local/bin/deepsource
 
       - name: Run DeepSource Scan
