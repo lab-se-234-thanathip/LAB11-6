@@ -1,7 +1,10 @@
-name: DeepSource Analysis
+name: DeepSource Scan
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -12,12 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install DeepSource CLI
-        run: |
-          curl https://deepsource.io/cli | sh
-
-      - name: Verify Installation
-        run: ~/.deepsource/bin/deepsource --version
-
       - name: Run DeepSource Scan
-        run: ~/.deepsource/bin/deepsource report --analyzer docker --key ${{ secrets.DEEPSOURCE_DSN }}
+        uses: deepsourcelabs/cli-action@v1
+        with:
+          dsn: ${{ secrets.DEEPSOURCE_DSN }}
+          analyzers: "docker"
