@@ -14,7 +14,12 @@ jobs:
 
       - name: Install DeepSource CLI
         run: |
-          curl https://deepsource.io/cli | sh
+          curl -fsSL https://deepsource.io/cli | sh
+          export PATH=$HOME/.deepsource/bin:$PATH
+          echo "PATH=$HOME/.deepsource/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Verify Installation
+        run: deepsource --version
 
       - name: Run DeepSource Scan
         env:
