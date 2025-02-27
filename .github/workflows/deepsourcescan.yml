@@ -22,17 +22,3 @@ jobs:
 
       - name: Verify Installation
         run: ./bin/deepsource version
-
-      - name: Authenticate with DeepSource
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-        run: |
-          echo "Authenticating with DeepSource..."
-          export DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}
-
-      - name: List Issues Found in Dockerfile
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-        run: |
-          export DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}
-          ./bin/deepsource issues list
