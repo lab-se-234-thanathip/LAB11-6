@@ -8,5 +8,16 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    
-    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install DeepSource CLI
+        run: |
+          curl https://deepsource.io/cli | sh
+
+      - name: Verify Installation
+        run: ~/.deepsource/bin/deepsource --version
+
+      - name: Run DeepSource Scan
+        run: ~/.deepsource/bin/deepsource report --analyzer docker --key ${{ secrets.DEEPSOURCE_DSN }}
