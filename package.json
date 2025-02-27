@@ -1,0 +1,20 @@
+{
+  "name": "lab11-6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lab-se-234-thanathip/LAB11-6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lab-se-234-thanathip/LAB11-6/issues"
+  },
+  "homepage": "https://github.com/lab-se-234-thanathip/LAB11-6#readme",
+  "description": ""
+}
