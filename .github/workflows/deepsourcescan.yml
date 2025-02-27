@@ -22,7 +22,7 @@ jobs:
           go-version: '1.18'
 
       - name: Initialize Go module
-        run: go mod init github.com/lab-se-234-thanathip/LAB11-6  # ปรับให้เป็น path ที่ถูกต้อง
+        run: go mod init github.com/thechef161246/LAB11-6  # ปรับให้เป็น path ที่ถูกต้อง
 
       - name: Run tests and generate coverage
         run: go test -coverprofile=coverage.out
