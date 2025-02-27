@@ -9,14 +9,18 @@ on:
       - main
 
 jobs:
-  analyze:
+  deepsource:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run DeepSource Scan
-        uses: deepsourcelabs/cli-action@v1
+      - name: Set up DeepSource
+        uses: deepsourcelabs/deepsource-action@v2
         with:
-          dsn: ${{ secrets.DEEPSOURCE_DSN }}
-          analyzers: "docker"
+          token: ${{ secrets.DEEPSOURCE_TOKEN }}
+
+      - name: Run DeepSource scan
+        run: |
+          deepsource scan
