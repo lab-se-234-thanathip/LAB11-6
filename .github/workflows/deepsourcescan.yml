@@ -19,12 +19,15 @@ jobs:
       - name: Install DeepSource CLI
         run: |
           curl -sSL https://deepsource.io/cli | sh
+          mkdir -p $HOME/.local/bin
+          mv deepsource $HOME/.local/bin/
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          chmod +x $HOME/.local/bin/deepsource
 
       - name: Verify Installation
-        run: deepsource --version
+        run: $HOME/.local/bin/deepsource --version
 
       - name: Run DeepSource scan
-        run: deepsource scan
+        run: $HOME/.local/bin/deepsource scan
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
