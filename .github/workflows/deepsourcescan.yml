@@ -33,4 +33,6 @@ jobs:
       - name: List Issues Found in Dockerfile
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-        run: ./bin/deepsource issues list
+        run: |
+          export DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}
+          ./bin/deepsource issues list
