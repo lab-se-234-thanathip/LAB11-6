@@ -26,22 +26,23 @@ jobs:
         run: |
           docker build -t my-docker-image .
 
-      # Run the container (you can adjust the command for your application)
+      # Run the container in detached mode
       - name: Run Docker container
         run: |
           docker run --rm -d my-docker-image
 
-      # Wait for a few seconds for the server to start
+      # Wait for a few seconds to ensure the container is running
       - name: Wait for server to start
-        run: sleep 10
+        run: sleep 20  # เพิ่มเวลารอให้ container ทำงาน
+
+      # Check if the container is running
+      - name: Verify Docker container is running
+        run: |
+          docker ps
 
       # Generate the coverage report (ปรับตามวิธีทดสอบที่คุณใช้)
       - name: Run custom tests and generate coverage report
         run: |
-          # ถ้าคุณใช้เครื่องมือหรือคำสั่งทดสอบที่ไม่ได้เกี่ยวข้องกับ pytest
-          # คุณสามารถใช้คำสั่งที่ตรงกับเครื่องมือที่ใช้ เช่น
-          # ./run_tests.sh --coverage > coverage.xml
-          # หรือถ้าเป็น endpoint ที่รันการทดสอบ
           curl http://localhost:80/coverage-report > coverage.xml
 
       # Report the coverage artifact to DeepSource
