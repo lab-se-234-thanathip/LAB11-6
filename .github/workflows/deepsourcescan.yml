@@ -14,9 +14,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set DeepSource DSN
-        run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
-
       - name: Install DeepSource CLI
         run: |
           curl https://deepsource.io/cli | sh
@@ -27,4 +24,7 @@ jobs:
         run: ./bin/deepsource version
 
       - name: Report Dockerfile to DeepSource
-        run: ./bin/deepsource report --analyzer docker --value-file Dockerfile
+        run: |
+          ./bin/deepsource report --analyzer docker --value-file Dockerfile
+        env:
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
