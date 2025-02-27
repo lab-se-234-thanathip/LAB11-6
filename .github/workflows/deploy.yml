@@ -39,15 +39,11 @@ jobs:
 
       # Step 6: Install DeepSource CLI
       - name: Install DeepSource CLI
-        run: |
-          curl https://deepsource.io/cli | sh
-          echo "DeepSource CLI installed at: $(which deepsource)"
-          export PATH=$PATH:$HOME/deepsource/bin
+        run: curl https://deepsource.io/cli | sh
 
-      # Step 7: Run DeepSource Scan
+      # Step 7: Run DeepSource scan
       - name: Run DeepSource Scan
-        run: |
-          deepsource analyze --token ${{ secrets.DEEPSOURCE_TOKEN }}
+        run: ~/.bin/deepsource analyze --token ${{ secrets.DEEPSOURCE_TOKEN }}
 
       # Step 8: Copy docker-compose.yml to server via SSH
       - name: Copy docker-compose.yml to server via SSH
