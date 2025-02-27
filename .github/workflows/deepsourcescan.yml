@@ -22,3 +22,12 @@ jobs:
 
       - name: Verify Installation
         run: ./bin/deepsource version
+
+      - name: Set up DeepSource DSN
+        run: echo "DEEPSOURCE_DSN=${{ secrets.DEEPSOURCE_DSN }}" >> $GITHUB_ENV
+
+      - name: Authenticate DeepSource
+        run: ./bin/deepsource auth login
+
+      - name: Run DeepSource Report
+        run: ./bin/deepsource report
