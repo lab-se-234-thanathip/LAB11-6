@@ -30,7 +30,12 @@ jobs:
       with:
         context: .
         push: true
-        tags: thechef2546/234-deploylab-frontend-prod:latest
+        tags: thechef2546/234-deploylab-devop6:latest
+
+    - name: Run DeepSource Scan
+      run: |
+        curl -s https://deepsource.io/github-action/install | bash
+        deepsource scan
 
     - name: Copy docker-compose.yml to server via SSH
       uses: appleboy/scp-action@v0.1.7
@@ -55,8 +60,3 @@ jobs:
           docker-compose pull
           docker-compose up -d
           rm -rf /home/ubuntu/frontend
-
-    - name: Run DeepSource Scan
-      uses: deepsource/action@v1
-      with:
-        token: ${{ secrets.DEEPSOURCE_TOKEN }}
